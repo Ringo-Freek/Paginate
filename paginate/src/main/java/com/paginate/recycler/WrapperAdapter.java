@@ -3,6 +3,8 @@ package com.paginate.recycler;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ITEM_VIEW_TYPE_LOADING = Integer.MAX_VALUE - 50; // Magic
@@ -32,6 +34,17 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else {
             wrappedAdapter.onBindViewHolder(holder, position);
         }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position,
+                                 List<Object> payloads) {
+        if (payloads == null || payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads);
+            return;
+        }
+
+        wrappedAdapter.onBindViewHolder(holder, position, payloads);
     }
 
     @Override
